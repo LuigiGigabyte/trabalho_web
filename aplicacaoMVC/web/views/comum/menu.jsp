@@ -16,6 +16,7 @@
                             <a class="nav-link" href="/aplicacaoMVC/admin/dashboard">Dashboard</a>
                             <a class="nav-link" href="/aplicacaoMVC/admin/CategoriaController?acao=Listar">Categorias</a>
                             <a class="nav-link" href="/aplicacaoMVC/admin/logOut">Logout</a>
+                            <a class="nav-link" href="/aplicacaoMVC/admin/AlunoController">Cadastrar aluno</a>
                 <%  } else { %>
                 
                             <a class="nav-link" href="/aplicacaoMVC/MostrarComentarios">Coment&aacute;rios</a>

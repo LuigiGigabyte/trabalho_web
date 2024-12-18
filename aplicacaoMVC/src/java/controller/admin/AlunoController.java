@@ -1,8 +1,10 @@
 package controller.admin;
 
 import entidade.Aluno; // Importando a classe Aluno
+import entidade.Categoria;
 import model.AlunoDAO; // Importando o DAO de Aluno
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,19 +20,31 @@ public class AlunoController extends HttpServlet {
             throws ServletException, IOException {
 
         String acao = request.getParameter("acao");
+        String msgOperacao = "";
         String id = request.getParameter("id");
 
         Aluno aluno = null;
         //if (id != null && !id.isEmpty()) {
         //   aluno = AlunoDAO.buscarPorId(Integer.parseInt(id));
         //}
+        AlunoDAO alunoDAO = new AlunoDAO();
 
         request.setAttribute("aluno", aluno);
         request.setAttribute("acao", acao);
+            switch (acao) {
+                case "Listar":
+                    ArrayList<Aluno> listaAlunos = alunoDAO.getAll();
+                    request.setAttribute("listaAlunos", listaAlunos);
 
-
-        RequestDispatcher rd = request.getRequestDispatcher("/views/admin/aluno/formAluno.jsp");
-        rd.forward(request, response);
+                    RequestDispatcher rd = request.getRequestDispatcher("/views/admin/aluno/listaAlunos.jsp");
+                    rd.forward(request, response);
+                case "Incluir":
+                    alunoDAO.insert(aluno);
+                    msgOperacao = "Cadastro realizado com sucesso!";
+                    break;
+                }
+        //RequestDispatcher rd = request.getRequestDispatcher("/views/admin/aluno/formAluno.jsp");
+        //rd.forward(request, response);
     }
 
 
@@ -38,8 +52,6 @@ public class AlunoController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String acao = request.getParameter("acao");
-        String msgOperacao = "";
         String link = "/admin/AlunoController?acao=Listar";
         AlunoDAO alunoDAO = new AlunoDAO();
         try {
@@ -52,7 +64,7 @@ public class AlunoController extends HttpServlet {
            //     System.err.println("O parâmetro 'id' não é válido: " + idParam);
            // }
 
- aluno.setNome(request.getParameter("nome"));
+            aluno.setNome(request.getParameter("nome"));
             aluno.setEmail(request.getParameter("email"));
             aluno.setCelular(request.getParameter("celular"));
             aluno.setCpf(request.getParameter("cpf"));

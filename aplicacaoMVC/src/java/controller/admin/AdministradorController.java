@@ -54,6 +54,13 @@ public class AdministradorController extends HttpServlet {
                     request.getRequestDispatcher("/views/comum/showMessage.jsp").forward(request, response);
                 }
                 break;
+            case "Alterar":
+                int idAlterar = Integer.parseInt(request.getParameter("id"));
+                admin = adminDAO.get(idAlterar);
+                request.setAttribute("admin", admin);
+                rd = request.getRequestDispatcher("/views/admin/administrador/formAdmin.jsp");
+                rd.forward(request, response);
+                break;
 
         }
     }
@@ -62,7 +69,7 @@ public class AdministradorController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String acao = request.getParameter("acao");
+        String acao = request.getParameter("btEnviar");
         String msgOperacao = "";
 
         String link = "/aplicacaoMVC/admin/AdministradorController?acao=Listar";

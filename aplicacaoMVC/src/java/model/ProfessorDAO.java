@@ -1,15 +1,15 @@
 package model;
 
-import entidade.Aluno;
+import entidade.Professor;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class AlunoDAO implements Dao<Aluno> {
+public class ProfessorDAO implements Dao<Professor> {
 
     @Override
-    public Aluno get(int id) {
-        Aluno aluno = null;
-        String query = "SELECT * FROM Alunos WHERE ID = ?";
+    public Professor get(int id) {
+        Professor professor = null;
+        String query = "SELECT * FROM Professores WHERE ID = ?";
 
         Conexao conexao = new Conexao();
         try {
@@ -18,82 +18,92 @@ public class AlunoDAO implements Dao<Aluno> {
             ResultSet resultado = sql.executeQuery();
 
             if (resultado.next()) {
-                aluno = new Aluno(
+                professor = new Professor(
                         resultado.getInt("ID"),
-                        resultado.getString("NOME")
+                        resultado.getString("NOME"),
+                        resultado.getString("EMAIL"),
+                        resultado.getString("CPF"),
+                        resultado.getString("SENHA")
                 );
             }
         } catch (SQLException e) {
-            System.err.println("Erro ao buscar aluno: " + e.getMessage());
+            System.err.println("Erro ao buscar professor: " + e.getMessage());
         }
-        return aluno;
+        return professor;
     }
 
     @Override
-    public void insert(Aluno aluno) {
-        String query = "INSERT INTO Alunos (nome, email, celular, cpf, senha, endereco, cidade, bairro, cep) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public void insert(Professor professor) {
+        String query = "INSERT INTO Professores (nome, email, cpf, senha) VALUES (?, ?, ?, ?)";
 
         Conexao conexao = new Conexao();
         try {
             PreparedStatement sql = conexao.getConexao().prepareStatement(query);
-            sql.setString(1, aluno.getNome());
-            sql.setString(2, aluno.getEmail());
-            sql.setString(3, aluno.getCelular());
-            sql.setString(4, aluno.getCpf());
-            sql.setString(5, aluno.getSenha());
-            sql.setString(6, aluno.getEndereco());
-            sql.setString(7, aluno.getCidade());
-            sql.setString(8, aluno.getBairro());
-            sql.setString(9, aluno.getCep());
+            sql.setString(1, professor.getNome());
+            sql.setString(2, professor.getEmail());
+            sql.setString(3, professor.getCpf());
+            sql.setString(4, professor.getSenha());
             sql.executeUpdate();
         } catch (SQLException e) {
-            System.err.println("Erro ao inserir aluno: " + e.getMessage());
+            System.err.println("Erro ao inserir professor: " + e.getMessage());
         }
     }
 
     @Override
-    public void update(Aluno aluno) {
-        String query = "UPDATE Alunos SET nome = ?, WHERE ID = ?";
+    public void update(Professor professor) {
+        String query = "UPDATE Professores SET nome = ?, email = ?, cpf = ?, senha = ? WHERE ID = ?";
+
         Conexao conexao = new Conexao();
-        try (
-            PreparedStatement sql = conexao.getConexao().prepareStatement(query)) {
+        try {
+            PreparedStatement sql = conexao.getConexao().prepareStatement(query);
+            sql.setString(1, professor.getNome());
+            sql.setString(2, professor.getEmail());
+            sql.setString(3, professor.getCpf());
+            sql.setString(4, professor.getSenha());
+            sql.setInt(5, professor.getId());
+            sql.executeUpdate();
         } catch (SQLException e) {
-            System.err.println("Erro ao atualizar aluno: " + e.getMessage());
+            System.err.println("Erro ao atualizar professor: " + e.getMessage());
         }
     }
 
     @Override
     public void delete(int id) {
-        String query = "DELETE FROM Alunos WHERE ID = ?";
-        Conexao conexao = new Conexao();
-        try (
-                 PreparedStatement sql = conexao.getConexao().prepareStatement(query)) {
+        String query = "DELETE FROM Professores WHERE ID = ?";
 
+        Conexao conexao = new Conexao();
+        try {
+            PreparedStatement sql = conexao.getConexao().prepareStatement(query);
             sql.setInt(1, id);
             sql.executeUpdate();
         } catch (SQLException e) {
-            System.err.println("Erro ao excluir aluno: " + e.getMessage());
+            System.err.println("Erro ao excluir professor: " + e.getMessage());
         }
     }
 
     @Override
-    public ArrayList<Aluno> getAll() {
-        ArrayList<Aluno> alunos = new ArrayList<>();
-        String query = "SELECT * FROM Alunos";
+    public ArrayList<Professor> getAll() {
+        ArrayList<Professor> professores = new ArrayList<>();
+        String query = "SELECT * FROM Professores";
+
         Conexao conexao = new Conexao();
-        try (
-                 PreparedStatement sql = conexao.getConexao().prepareStatement(query);  ResultSet resultado = sql.executeQuery()) {
+        try {
+            PreparedStatement sql = conexao.getConexao().prepareStatement(query);
+            ResultSet resultado = sql.executeQuery();
 
             while (resultado.next()) {
-                Aluno aluno = new Aluno(
+                Professor professor = new Professor(
                         resultado.getInt("ID"),
-                        resultado.getString("NOME")
+                        resultado.getString("NOME"),
+                        resultado.getString("EMAIL"),
+                        resultado.getString("CPF"),
+                        resultado.getString("SENHA")
                 );
-                alunos.add(aluno);
+                professores.add(professor);
             }
         } catch (SQLException e) {
-            System.err.println("Erro ao listar alunos: " + e.getMessage());
+            System.err.println("Erro ao listar professores: " + e.getMessage());
         }
-        return alunos;
+        return professores;
     }
 }

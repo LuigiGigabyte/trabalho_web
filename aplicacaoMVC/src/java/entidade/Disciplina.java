@@ -1,39 +1,40 @@
 package entidade;
 
-public class Professor {
+public class Disciplina {
 
     private int id;
     private String nome;
-    private String email;
-    private String cpf;
-    private String senha;
+    private String requisito;
+    private String ementa;
+    private int cargaHoraria;
 
-    public Professor(int id, String nome, String email, String cpf, String senha) {
+    // Construtor completo
+    public Disciplina(int id, String nome, String requisito, String ementa, int cargaHoraria) {
         this.id = id;
         this.nome = nome;
-        this.email = email;
-        this.cpf = cpf;
-        this.senha = senha;
+        this.requisito = requisito;
+        this.ementa = ementa;
+        this.cargaHoraria = cargaHoraria;
     }
 
-    public Professor(String cpf, String senha) {
-        this.cpf = cpf;
-        this.senha = senha;
-    }
-
-    public Professor(int id, String nome) {
-        this.id = id;
+    // Construtor com nome, requisito, ementa e carga horária
+    public Disciplina(String nome, String requisito, String ementa, int cargaHoraria) {
         this.nome = nome;
+        this.requisito = requisito;
+        this.ementa = ementa;
+        this.cargaHoraria = cargaHoraria;
     }
 
-    public Professor() {
+    // Construtor sem parâmetros (para uso em criação de objetos vazios)
+    public Disciplina() {
         this.id = 0;
         this.nome = "";
-        this.email = "";
-        this.cpf = "";
-        this.senha = "";
+        this.requisito = "";
+        this.ementa = "";
+        this.cargaHoraria = 0;
     }
 
+    // Métodos Getters e Setters
     public int getId() {
         return id;
     }
@@ -50,27 +51,27 @@ public class Professor {
         this.nome = nome;
     }
 
-    public String getEmail() {
-        return email;
+    public String getRequisito() {
+        return requisito;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setRequisito(String requisito) {
+        this.requisito = requisito;
     }
 
-    public String getCpf() {
-        return cpf;
+    public String getEmenta() {
+        return ementa;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setEmenta(String ementa) {
+        this.ementa = ementa;
     }
 
-    public String getSenha() {
-        return senha;
+    public int getCargaHoraria() {
+        return cargaHoraria;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setCargaHoraria(int cargaHoraria) {
+        this.cargaHoraria = cargaHoraria;
     }
 }

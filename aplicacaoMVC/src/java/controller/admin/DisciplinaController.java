@@ -1,7 +1,7 @@
 package controller.admin;
 
-import entidade.Professor; // Importando a classe Professor
-import model.ProfessorDAO; // Importando o DAO de Professor
+import entidade.Disciplina;
+import model.DisciplinaDAO; 
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "ProfessorController", urlPatterns = {"/admin/ProfessorController"})
-public class ProfessorController extends HttpServlet {
+@WebServlet(name = "DisciplinaController", urlPatterns = {"/admin/DisciplinaController"})
+public class DisciplinaController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -22,33 +22,40 @@ public class ProfessorController extends HttpServlet {
         String msgOperacao = "";
         String id = request.getParameter("id");
 
-        Professor professor = null;
-        ProfessorDAO professorDAO = new ProfessorDAO();
+        Disciplina disciplina = null;
+        DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
 
-        request.setAttribute("professor", professor);
+        request.setAttribute("disciplina", disciplina);
         request.setAttribute("acao", acao);
         RequestDispatcher rd;
 
         switch (acao) {
             case "Listar":
-                ArrayList<Professor> listaProfessores = professorDAO.getAll();
-                request.setAttribute("listaProfessores", listaProfessores);
+                ArrayList<Disciplina> listaDisciplinas = disciplinaDAO.getAll();
+                request.setAttribute("listaDisciplinas", listaDisciplinas);
 
-                rd = request.getRequestDispatcher("/views/admin/professor/listaProfessores.jsp");
+                rd = request.getRequestDispatcher("/views/admin/disciplina/listaDisciplinas.jsp");
                 rd.forward(request, response);
                 break;
             case "Incluir":
-                rd = request.getRequestDispatcher("/views/admin/professor/formProfessor.jsp");
+                rd = request.getRequestDispatcher("/views/admin/disciplina/formDisciplina.jsp");
                 rd.forward(request, response);
                 break;
             case "Excluir":
-                int professorId = Integer.parseInt(request.getParameter("id"));
-                professorDAO.delete(professorId);
+                int disciplinaId = Integer.parseInt(request.getParameter("id"));
+                disciplinaDAO.delete(disciplinaId);
                 request.setAttribute("msgOperacaoRealizada", "Exclusão realizada com sucesso!");
-                request.setAttribute("link", "/aplicacaoMVC/admin/ProfessorController?acao=Listar");
+                request.setAttribute("link", "/aplicacaoMVC/admin/DisciplinaController?acao=Listar");
                 rd = request.getRequestDispatcher("/views/comum/showMessage.jsp");
                 rd.forward(request, response);
-                
+                break;
+            case "Alterar":
+                int idAlterar = Integer.parseInt(request.getParameter("id"));
+                disciplina = disciplinaDAO.get(idAlterar);
+                request.setAttribute("disciplina", disciplina);
+                rd = request.getRequestDispatcher("/views/admin/disciplina/formDisciplina.jsp");
+                rd.forward(request, response);
+                break;
         }
     }
 
@@ -59,31 +66,33 @@ public class ProfessorController extends HttpServlet {
         String acao = request.getParameter("acao");
         String msgOperacao = "";
 
-        String link = "/aplicacaoMVC/admin/ProfessorController?acao=Listar";
+        String link = "/aplicacaoMVC/admin/DisciplinaController?acao=Listar";
 
         try {
-            Professor professor = new Professor();
+            Disciplina disciplina = new Disciplina();
 
-            professor.setNome(request.getParameter("nome"));
-            professor.setEmail(request.getParameter("email"));
-            professor.setCpf(request.getParameter("cpf"));
-            professor.setSenha(request.getParameter("senha"));
+            // Obtendo dados do formulário
+            disciplina.setNome(request.getParameter("nome"));
+            disciplina.setRequisito(request.getParameter("requisito"));
+            disciplina.setEmenta(request.getParameter("ementa"));
+            disciplina.setCargaHoraria(Integer.parseInt(request.getParameter("cargaHoraria")));
 
-            ProfessorDAO professorDAO = new ProfessorDAO();
+            DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
             RequestDispatcher rd;
 
             switch (acao) {
                 case "Incluir":
-                    professorDAO.insert(professor);
+                    disciplinaDAO.insert(disciplina);
                     msgOperacao = "Cadastro realizado com sucesso!";
                     break;
                 case "Alterar":
-                    professorDAO.update(professor);
+                    disciplina.setId(Integer.parseInt(request.getParameter("id")));
+                    disciplinaDAO.update(disciplina);
                     msgOperacao = "Alteração realizada com sucesso!";
                     break;
                 case "Excluir":
-                    int professorId = Integer.parseInt(request.getParameter("id"));
-                    professorDAO.delete(professorId);
+                    int disciplinaId = Integer.parseInt(request.getParameter("id"));
+                    disciplinaDAO.delete(disciplinaId);
                     msgOperacao = "Exclusão realizada com sucesso!";
                     break;
                 default:

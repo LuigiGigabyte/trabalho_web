@@ -19,6 +19,7 @@
                             <a class="nav-link" href="/aplicacaoMVC/admin/AlunoController?acao=Listar">Alunos</a>
                             <a class="nav-link" href="/aplicacaoMVC/admin/ProfessorController?acao=Listar">Professores</a>
                             <a class="nav-link" href="/aplicacaoMVC/admin/AdministradorController?acao=Listar">Admin</a>
+                            <a class="nav-link" href="/aplicacaoMVC/admin/DisciplinaController?acao=Listar">Disciplinas</a>
                 <%  } else { %>
                 
                             <a class="nav-link" href="/aplicacaoMVC/MostrarComentarios">Coment&aacute;rios</a>

@@ -8,7 +8,7 @@ public class AlunoDAO implements Dao<Aluno> {
 
     @Override
     public Aluno get(int id) {
-        Aluno aluno = null;
+        Aluno Aluno = new Aluno();
         String query = "SELECT * FROM Alunos WHERE ID = ?";
 
         Conexao conexao = new Conexao();
@@ -17,16 +17,25 @@ public class AlunoDAO implements Dao<Aluno> {
             sql.setInt(1, id);
             ResultSet resultado = sql.executeQuery();
 
-            if (resultado.next()) {
-                aluno = new Aluno(
-                        resultado.getInt("ID"),
-                        resultado.getString("NOME")
-                );
+            if (resultado !=  null) {
+                while (resultado.next()) {
+                    Aluno.setId(Integer.parseInt(resultado.getString("ID")));
+                    Aluno.setNome(resultado.getString("NOME"));
+                    Aluno.setCpf(resultado.getString("CPF"));
+                    Aluno.setEndereco(resultado.getString("ENDERECO"));
+                    Aluno.setSenha(resultado.getString("SENHA"));
+                    Aluno.setEmail(resultado.getString("EMAIL"));
+                    Aluno.setCelular(resultado.getString("CELULAR"));
+                    Aluno.setCidade(resultado.getString("CIDADE"));
+                    Aluno.setBairro(resultado.getString("BAIRRO"));
+                    Aluno.setCep(resultado.getString("CEP"));
+                    
+                }
             }
         } catch (SQLException e) {
             System.err.println("Erro ao buscar aluno: " + e.getMessage());
         }
-        return aluno;
+        return Aluno;
     }
 
     @Override
@@ -53,12 +62,27 @@ public class AlunoDAO implements Dao<Aluno> {
 
     @Override
     public void update(Aluno aluno) {
-        String query = "UPDATE Alunos SET nome = ?, WHERE ID = ?";
         Conexao conexao = new Conexao();
-        try (
-            PreparedStatement sql = conexao.getConexao().prepareStatement(query)) {
+        try {
+            String updateSQL = "UPDATE alunos SET nome = ?, cpf = ?, endereco = ?, senha = ?, cidade = ?, bairro = ?, celular = ?, email = ?, cep = ?  WHERE id = ? ";
+            PreparedStatement sql = conexao.getConexao().prepareStatement(updateSQL);
+            sql.setString(1, aluno.getNome());
+            sql.setString(2, aluno.getCpf());
+            sql.setString(3, aluno.getEndereco());
+            sql.setString(4, aluno.getSenha());
+            sql.setString(5, aluno.getCidade());
+            sql.setString(6, aluno.getBairro());
+            sql.setString(7, aluno.getCelular());
+            sql.setString(8, aluno.getEmail());
+            sql.setString(9, aluno.getCep());
+            sql.setInt(10, aluno.getId());
+            System.out.println(sql.toString());
+            sql.executeUpdate();
+
         } catch (SQLException e) {
-            System.err.println("Erro ao atualizar aluno: " + e.getMessage());
+            throw new RuntimeException("Query de update (alterar) incorreta");
+        } finally {
+            conexao.closeConexao();
         }
     }
 

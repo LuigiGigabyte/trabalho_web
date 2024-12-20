@@ -1,15 +1,18 @@
 package controller.admin;
 
-import entidade.Aluno; // Importando a classe Aluno
-import model.AlunoDAO; // Importando o DAO de Aluno
+import entidade.Aluno;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.AlunoDAO;
 
 @WebServlet(name = "AlunoController", urlPatterns = {"/admin/AlunoController"})
 public class AlunoController extends HttpServlet {
@@ -20,7 +23,7 @@ public class AlunoController extends HttpServlet {
 
         String acao = request.getParameter("acao");
         String msgOperacao = "";
-        String id = request.getParameter("id");
+        int id = 0;
 
         Aluno aluno = null;
         //if (id != null && !id.isEmpty()) {
@@ -46,12 +49,28 @@ public class AlunoController extends HttpServlet {
                     //msgOperacao = "Cadastro realizado com sucesso!";
                     break;
                 case "Excluir":
-                    int alunoId = Integer.parseInt(request.getParameter("id"));
-                    alunoDAO.delete(alunoId);
+                    id = Integer.parseInt(request.getParameter("id"));
+                    alunoDAO.delete(id);
                     request.setAttribute("msgOperacaoRealizada", "Exclusão realizada com sucesso!");
                     request.setAttribute("link", "/aplicacaoMVC/admin/AlunoController?acao=Listar");
                     rd = request.getRequestDispatcher("/views/comum/showMessage.jsp");
                     rd.forward(request, response);
+                    
+                case "Alterar":
+                    id = Integer.parseInt(request.getParameter("id"));
+
+                     try {
+                         aluno = alunoDAO.get(id);
+                     } catch (Exception ex) {
+                         Logger.getLogger(AlunoController.class.getName()).log(Level.SEVERE, null, ex);
+                     }
+
+                     request.setAttribute("aluno", aluno);
+                     request.setAttribute("msgError", "");
+                     request.setAttribute("acao", acao);
+
+                     rd = request.getRequestDispatcher("/views/admin/aluno/formAluno.jsp");
+                     rd.forward(request, response);
                 }
         //RequestDispatcher rd = request.getRequestDispatcher("/views/admin/aluno/formAluno.jsp");
         //rd.forward(request, response);
@@ -62,8 +81,9 @@ public class AlunoController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String acao = request.getParameter("acao");
+
         String msgOperacao = "";
+        String acao = request.getParameter("btEnviar");
 
         String link = "/aplicacaoMVC/admin/AlunoController?acao=Listar";
         
@@ -88,6 +108,7 @@ public class AlunoController extends HttpServlet {
             aluno.setCidade(request.getParameter("cidade"));
             aluno.setBairro(request.getParameter("bairro"));
             aluno.setCep(request.getParameter("cep"));
+            aluno.setId(Integer.parseInt(request.getParameter("id")));
             RequestDispatcher rd;
             AlunoDAO alunoDAO = new AlunoDAO();
             switch (acao) {

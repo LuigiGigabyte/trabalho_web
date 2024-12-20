@@ -45,6 +45,13 @@ public class AlunoController extends HttpServlet {
                     //alunoDAO.insert(aluno);
                     //msgOperacao = "Cadastro realizado com sucesso!";
                     break;
+                case "Excluir":
+                    int alunoId = Integer.parseInt(request.getParameter("id"));
+                    alunoDAO.delete(alunoId);
+                    request.setAttribute("msgOperacaoRealizada", "Exclusão realizada com sucesso!");
+                    request.setAttribute("link", "/aplicacaoMVC/admin/AlunoController?acao=Listar");
+                    rd = request.getRequestDispatcher("/views/comum/showMessage.jsp");
+                    rd.forward(request, response);
                 }
         //RequestDispatcher rd = request.getRequestDispatcher("/views/admin/aluno/formAluno.jsp");
         //rd.forward(request, response);

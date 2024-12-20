@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="entidade.Disciplina"%>
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -13,36 +14,52 @@
         <div class="container">
             <jsp:include page="../../comum/menu.jsp" />
             <div class="col-sm-6 offset-3 mt-5">
-                <%
-                    String msgError = (String) request.getAttribute("msgError");
-                    if ((msgError != null) && (!msgError.isEmpty())) {%>
-                <div class="alert alert-danger" role="alert">
-                    <%= msgError%>
-                </div>
-                <% }%>
+                <% Disciplina disciplina = new Disciplina();
+                    String acao = (String) request.getAttribute("acao"); 
+                    switch(acao) { 
+                        case "Incluir": 
+                            out.println("<h1>Incluir Disciplina</h1>"); 
+                            break; 
+                        case "Alterar":
+                            disciplina = (Disciplina) request.getAttribute("disciplina");
+                            out.println("<h1>Alterar Disciplina</h1>");
+                            break; 
+                    }; 
+                    String msgError = (String) request.getAttribute("msgError"); 
+                    if ((msgError != null) && (!msgError.isEmpty())) {
+                    %>
+                    <div class="alert alert-danger" role="alert">
+                    <%=msgError
+                    %>
+                    </div>
+                    <% }%>
 
-                <h3>Cadastro de Disciplina</h3>
-
-                <form action="/aplicacaoMVC/admin/DisciplinaController?acao=Incluir" method="POST">
+                <form action="/aplicacaoMVC/admin/DisciplinaController" method="POST">
+                    <input
+                            type="hidden"
+                            name="id"
+                            value="<%=disciplina.getId()%>"
+                            class="form-control"
+                    />
                     <div class="mb-3">
                         <label for="nome" class="form-label">Nome</label>
-                        <input type="text" name="nome" class="form-control" placeholder="Nome da disciplina" required>
+                        <input value="<%=disciplina.getNome()%>" type="text" name="nome" class="form-control" placeholder="Nome da disciplina" required>
                     </div>
                     <div class="mb-3">
                         <label for="requisito" class="form-label">Requisito</label>
-                        <input type="text" name="requisito" class="form-control" placeholder="Requisito da disciplina" required>
+                        <input value="<%=disciplina.getRequisito()%>" type="text" name="requisito" class="form-control" placeholder="Requisito da disciplina" required>
                     </div>
                     <div class="mb-3">
                         <label for="ementa" class="form-label">Ementa</label>
-                        <textarea name="ementa" class="form-control" placeholder="Ementa da disciplina" required></textarea>
+                        <textarea value="<%=disciplina.getEmenta()%>" name="ementa" class="form-control" placeholder="Ementa da disciplina" required><%=disciplina.getEmenta()%></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="cargaHoraria" class="form-label">Carga Horária</label>
-                        <input type="number" name="cargaHoraria" class="form-control" placeholder="Carga horária da disciplina" required>
+                        <input value="<%=disciplina.getCargaHoraria()%>" type="number" name="cargaHoraria" class="form-control" placeholder="Carga horária da disciplina" required>
                     </div>
                     <div class="row">
                         <div class="col-sm-2">
-                            <input type="submit" value="Cadastrar" class="btn btn-primary">
+                            <input value="<%=acao%>" type="submit" name="btEnviar" class="btn btn-primary">
                         </div>
                         <div class="col-sm-2">
                             <a href="/aplicacaoMVC/admin/DisciplinaController?acao=Listar" class="btn btn-danger">Retornar</a>

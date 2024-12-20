@@ -63,7 +63,7 @@ public class DisciplinaController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String acao = request.getParameter("acao");
+        String acao = request.getParameter("btEnviar");
         String msgOperacao = "";
 
         String link = "/aplicacaoMVC/admin/DisciplinaController?acao=Listar";

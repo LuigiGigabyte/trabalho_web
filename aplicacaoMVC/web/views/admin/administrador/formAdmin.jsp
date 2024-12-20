@@ -1,0 +1,64 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="#">
+        <title>Cadastro de Administrador</title>
+        <link href="http://localhost:8080/aplicacaoMVC/views/bootstrap/bootstrap.min.css"  rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+            <jsp:include page="../../comum/menu.jsp" />
+            <div class="col-sm-6 offset-3 mt-5">
+                <%
+                    String msgError = (String) request.getAttribute("msgError");
+                    if ((msgError != null) && (!msgError.isEmpty())) {%>
+                <div class="alert alert-danger" role="alert">
+                    <%= msgError %>
+                </div>
+                <% } %>
+
+                <h3>Cadastro de Administrador</h3>
+
+                <form action="/aplicacaoMVC/admin/AdministradorController?acao=Incluir" method="POST">
+                    <div class="mb-3">
+                        <label for="nome" class="form-label">Nome</label>
+                        <input type="text" name="nome" class="form-control" placeholder="Nome do administrador" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cpf" class="form-label">CPF</label>
+                        <input type="text" name="cpf" class="form-control" placeholder="999.999.999-99" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="senha" class="form-label">Senha</label>
+                        <input type="password" name="senha" class="form-control" placeholder="Senha do administrador" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="endereco" class="form-label">Endereço</label>
+                        <input type="text" name="endereco" class="form-control" placeholder="Endereço" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="aprovado" class="form-label">Aprovado</label>
+                        <select name="aprovado" class="form-control" required>
+                            <option value="S">Sim</option>
+                            <option value="N">Não</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <input type="submit" value="Cadastrar" class="btn btn-primary">
+                        </div>
+                        <div class="col-sm-2">
+                            <a href="/aplicacaoMVC/admin/AdministradorController?acao=Listar" class="btn btn-danger">Retornar</a>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        <script src="views/bootstrap/bootstrap.bundle.min.js"></script>
+    </body>
+</html>

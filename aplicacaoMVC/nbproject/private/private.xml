@@ -3,30 +3,38 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/src/java/entidade/Disciplina.java</file>
+            <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/src/java/controller/admin/TurmaController.java</file>
             <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/src/java/controller/admin/CategoriaController.java</file>
             <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/web/views/admin/aluno/formAluno.jsp</file>
             <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/src/java/model/ProfessorDAO.java</file>
             <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/src/java/filtro/filtroRestrito.java</file>
+            <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/src/java/model/DisciplinaDAO.java</file>
             <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/src/java/model/AdministradorDAO.java</file>
             <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/web/views/comum/showMessage.jsp</file>
             <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/web/views/admin/professor/formProfessor.jsp</file>
+            <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/src/java/entidade/Turma.java</file>
             <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/src/java/entidade/Administrador.java</file>
+            <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/web/views/admin/disciplina/formDisciplina.jsp</file>
             <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/web/views/registro/formRegistro.jsp</file>
-            <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/web/views/autenticacao/formLogin.jsp</file>
             <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/src/java/controller/admin/ProfessorController.java</file>
+            <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/web/views/admin/administrador/formAdmin.jsp</file>
             <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/src/java/model/ComentarioDAO.java</file>
             <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/src/java/controller/MostrarComentarios.java</file>
             <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/src/java/entidade/Aluno.java</file>
             <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/src/java/controller/RegistrarController.java</file>
             <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/src/java/controller/admin/AlunoController.java</file>
+            <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/web/views/admin/disciplina/listaDisciplinas.jsp</file>
             <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/web/views/admin/aluno/listaAlunos.jsp</file>
             <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/src/java/model/Dao.java</file>
             <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/src/java/model/AlunoDAO.java</file>
             <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/src/java/entidade/Categoria.java</file>
             <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/src/java/controller/AutenticaController.java</file>
+            <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/src/java/model/TurmaDAO.java</file>
             <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/src/java/model/CategoriaDAO.java</file>
             <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/web/views/admin/categoria/listaCategorias.jsp</file>
             <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/src/java/controller/HomeController.java</file>
+            <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/src/java/controller/admin/DisciplinaController.java</file>
             <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/web/views/admin/professor/listaProfessores.jsp</file>
             <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/web/views/admin/administrador/listaAdmins.jsp</file>
             <file>file:/C:/Users/luigi.bongiolo/Downloads/aplicacaoMVC/trabalho_web/aplicacaoMVC/src/java/controller/admin/AdministradorController.java</file>

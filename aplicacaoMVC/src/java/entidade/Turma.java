@@ -1,5 +1,8 @@
 package entidade;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Turma {
 
     private int id;
@@ -8,7 +11,15 @@ public class Turma {
     private int alunoId;
     private String codigoTurma;
     private double nota;
+    private List<Aluno> alunos; 
 
+    
+    public List<Aluno> getAlunos() {
+        return alunos;
+    }
+    public void addAluno(Aluno aluno) {
+        this.alunos.add(aluno); 
+    }
     public Turma(int id, int professorId, int disciplinaId, int alunoId, String codigoTurma, double nota) {
         this.id = id;
         this.professorId = professorId;
@@ -35,6 +46,7 @@ public class Turma {
     }
 
     public Turma() {
+        this.alunos = new ArrayList<>();
         this.id = 0;
         this.professorId = 0;
         this.disciplinaId = 0;

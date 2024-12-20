@@ -1,5 +1,7 @@
 package model;
 
+import entidade.Aluno;
+import entidade.Disciplina;
 import entidade.Turma;
 import java.sql.*;
 import java.util.ArrayList;
@@ -72,7 +74,7 @@ public class TurmaDAO implements Dao<Turma> {
 
     @Override
     public void delete(int id) {
-        String query = "DELETE FROM turmas WHERE id = ?";
+        String query = "DELETE FROM turmas WHERE codigo_turma = ?";
 
         Conexao conexao = new Conexao();
         try {
@@ -108,6 +110,46 @@ public class TurmaDAO implements Dao<Turma> {
         } catch (SQLException e) {
             System.err.println("Erro ao listar turmas: " + e.getMessage());
         }
+        return turmas;
+    }
+    public ArrayList<Turma> getAllTurmasComAlunosNotas() {
+        ArrayList<Turma> turmas = new ArrayList<>();
+        String query = "SELECT t.id AS turma_id, t.codigo_turma, a.id AS aluno_id, a.nome AS aluno_nome, t.nota, d.id AS disciplina_id " +
+                       "FROM turmas t " +
+                       "JOIN alunos a ON a.id = t.aluno_id " +
+                       "JOIN disciplina d ON d.id = t.disciplina_id";
+
+        Conexao conexao = new Conexao();
+        try {
+            PreparedStatement sql = conexao.getConexao().prepareStatement(query);
+            ResultSet resultado = sql.executeQuery();
+
+
+            while (resultado.next()) {
+
+                Aluno aluno = new Aluno();
+                aluno.setId(resultado.getInt("aluno_id"));
+                aluno.setNome(resultado.getString("aluno_nome"));
+                
+                DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+                Disciplina disciplina = new Disciplina();
+
+
+                Turma turma = new Turma();
+                turma.setId(resultado.getInt("turma_id"));
+                turma.setCodigoTurma(resultado.getString("codigo_turma"));
+                turma.setDisciplinaId(resultado.getInt("disciplina_id"));
+                turma.setNota(resultado.getDouble("nota"));
+
+
+                turma.addAluno(aluno);
+
+                turmas.add(turma);
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar turmas com alunos e notas: " + e.getMessage());
+        }
+
         return turmas;
     }
 }

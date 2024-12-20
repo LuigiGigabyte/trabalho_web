@@ -58,7 +58,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="aprovado" class="form-label">Aprovado</label>
-                        <select value="<%=Administrador.getAprovado()%>" name="aprovado" class="form-control" required>
+                        <select name="aprovado" class="form-control" required>
                             <option <%=Administrador.getAprovado().equals("S") ? "selected" : ""%> value="S">Sim</option>
                             <option <%=Administrador.getAprovado().equals("N") ? "selected" : ""%> value="N">Não</option>
                         </select>

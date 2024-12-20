@@ -73,7 +73,7 @@ public class TurmaController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String acao = request.getParameter("acao");
+        String acao = request.getParameter("btEnviar");
         String msgOperacao = "";
         String link = "/aplicacaoMVC/admin/TurmaController?acao=Listar";
 
@@ -90,6 +90,7 @@ public class TurmaController extends HttpServlet {
 
             switch (acao) {
                 case "Incluir":
+                    System.out.println("TESTE TESTE TESTE TESTE TESTE TESTE");
                     turmaDAO.insert(turma);
                     msgOperacao = "Cadastro realizado com sucesso!";
                     break;

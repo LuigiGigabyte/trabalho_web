@@ -1,4 +1,4 @@
-package controlador;
+package controller.admin;
 
 import entidade.Turma;
 import entidade.Aluno;

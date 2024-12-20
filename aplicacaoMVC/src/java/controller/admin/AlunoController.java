@@ -1,7 +1,6 @@
 package controller.admin;
 
 import entidade.Aluno; // Importando a classe Aluno
-import entidade.Categoria;
 import model.AlunoDAO; // Importando o DAO de Aluno
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,16 +30,20 @@ public class AlunoController extends HttpServlet {
 
         request.setAttribute("aluno", aluno);
         request.setAttribute("acao", acao);
+        RequestDispatcher rd;
             switch (acao) {
                 case "Listar":
                     ArrayList<Aluno> listaAlunos = alunoDAO.getAll();
                     request.setAttribute("listaAlunos", listaAlunos);
 
-                    RequestDispatcher rd = request.getRequestDispatcher("/views/admin/aluno/listaAlunos.jsp");
+                    rd = request.getRequestDispatcher("/views/admin/aluno/listaAlunos.jsp");
                     rd.forward(request, response);
+                
                 case "Incluir":
-                    alunoDAO.insert(aluno);
-                    msgOperacao = "Cadastro realizado com sucesso!";
+                    rd = request.getRequestDispatcher("/views/admin/aluno/formAluno.jsp");
+                    rd.forward(request, response);
+                    //alunoDAO.insert(aluno);
+                    //msgOperacao = "Cadastro realizado com sucesso!";
                     break;
                 }
         //RequestDispatcher rd = request.getRequestDispatcher("/views/admin/aluno/formAluno.jsp");
@@ -51,9 +54,12 @@ public class AlunoController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        String acao = request.getParameter("acao");
+        String msgOperacao = "";
 
-        String link = "/admin/AlunoController?acao=Listar";
-        AlunoDAO alunoDAO = new AlunoDAO();
+        String link = "/aplicacaoMVC/admin/AlunoController?acao=Listar";
+        
         try {
             Aluno aluno = new Aluno();
             
@@ -65,6 +71,8 @@ public class AlunoController extends HttpServlet {
            // }
 
             aluno.setNome(request.getParameter("nome"));
+            System.out.print("Nome: ");
+            System.out.print(aluno.getNome());
             aluno.setEmail(request.getParameter("email"));
             aluno.setCelular(request.getParameter("celular"));
             aluno.setCpf(request.getParameter("cpf"));
@@ -73,6 +81,8 @@ public class AlunoController extends HttpServlet {
             aluno.setCidade(request.getParameter("cidade"));
             aluno.setBairro(request.getParameter("bairro"));
             aluno.setCep(request.getParameter("cep"));
+            RequestDispatcher rd;
+            AlunoDAO alunoDAO = new AlunoDAO();
             switch (acao) {
                 case "Incluir":
                     alunoDAO.insert(aluno);
@@ -93,7 +103,7 @@ public class AlunoController extends HttpServlet {
 
             request.setAttribute("msgOperacaoRealizada", msgOperacao);
             request.setAttribute("link", link);
-            RequestDispatcher rd = request.getRequestDispatcher("/views/comum/showMessage.jsp");
+            rd = request.getRequestDispatcher("/views/comum/showMessage.jsp");
             rd.forward(request, response);
 
         } catch (Exception e) {

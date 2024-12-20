@@ -48,6 +48,13 @@ public class ProfessorController extends HttpServlet {
                 request.setAttribute("link", "/aplicacaoMVC/admin/ProfessorController?acao=Listar");
                 rd = request.getRequestDispatcher("/views/comum/showMessage.jsp");
                 rd.forward(request, response);
+            case "Alterar":
+                int idAlterar = Integer.parseInt(request.getParameter("id"));
+                professor = professorDAO.get(idAlterar);
+                request.setAttribute("professor", professor);
+                rd = request.getRequestDispatcher("/views/admin/professor/formProfessor.jsp");
+                rd.forward(request, response);
+                break;
                 
         }
     }
@@ -56,7 +63,7 @@ public class ProfessorController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String acao = request.getParameter("acao");
+        String acao = request.getParameter("btEnviar");
         String msgOperacao = "";
 
         String link = "/aplicacaoMVC/admin/ProfessorController?acao=Listar";
@@ -68,6 +75,7 @@ public class ProfessorController extends HttpServlet {
             professor.setEmail(request.getParameter("email"));
             professor.setCpf(request.getParameter("cpf"));
             professor.setSenha(request.getParameter("senha"));
+            professor.setId(Integer.parseInt(request.getParameter("id")));
 
             ProfessorDAO professorDAO = new ProfessorDAO();
             RequestDispatcher rd;

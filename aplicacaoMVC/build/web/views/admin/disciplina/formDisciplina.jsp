@@ -55,7 +55,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="cargaHoraria" class="form-label">Carga Horária</label>
-                        <input value="<%=disciplina.getCargaHoraria()%>" type="number" name="cargaHoraria" class="form-control" placeholder="Carga horária da disciplina" required>
+                        <input min="0" value="<%=disciplina.getCargaHoraria()%>" type="number" name="cargaHoraria" class="form-control" placeholder="Carga horária da disciplina" required>
                     </div>
                     <div class="row">
                         <div class="col-sm-2">
@@ -70,5 +70,6 @@
             </div>
         </div>
         <script src="views/bootstrap/bootstrap.bundle.min.js"></script>
+        
     </body>
 </html>

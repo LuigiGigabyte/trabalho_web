@@ -85,12 +85,12 @@
 
                     <div class="mb-3">
                         <label for="codigo_turma" class="form-label">Código da Turma</label>
-                        <input value="<%=turma.getCodigoTurma()%>" type="text" name="codigo_turma" class="form-control" placeholder="Código da turma" required>
+                        <input maxlength="2" value="<%=turma.getCodigoTurma()%>" type="text" name="codigo_turma" class="form-control" placeholder="Código da turma" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="nota" class="form-label">Nota</label>
-                        <input value="<%=turma.getNota()%>" type="number" name="nota" class="form-control" step="0.01" placeholder="Nota da turma" required>
+                        <input  min="0" min="10" value="<%=turma.getNota()%>" type="number" name="nota" class="form-control" step="0.01" placeholder="Nota da turma" required>
                     </div>
 
                     <div class="row">

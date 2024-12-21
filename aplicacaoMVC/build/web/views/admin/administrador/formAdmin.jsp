@@ -46,7 +46,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="cpf" class="form-label">CPF</label>
-                        <input value="<%=Administrador.getCpf()%>" type="text" name="cpf" class="form-control" placeholder="999.999.999-99" required>
+                        <input pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" value="<%=Administrador.getCpf()%>" type="text" name="cpf" class="form-control" placeholder="999.999.999-99" required>
                     </div>
                     <div class="mb-3">
                         <label for="senha" class="form-label">Senha</label>
@@ -76,5 +76,69 @@
             </div>
         </div>
         <script src="views/bootstrap/bootstrap.bundle.min.js"></script>
+        <script>
+        
+        
+
+        function validarCPF(cpf) {
+            cpf = cpf.replace(/[^\d]+/g, ''); // Remove qualquer caractere não numérico
+
+            if (cpf.length !== 11) return false; // O CPF deve ter 11 dígitos
+
+            // Validação de CPF
+            let soma = 0;
+            let resto;
+
+            for (let i = 1; i <= 9; i++) soma += parseInt(cpf.charAt(i - 1)) * (11 - i);
+            resto = (soma * 10) % 11;
+            if ((resto === 10 || resto === 11) ? parseInt(cpf.charAt(9)) !== 0 : parseInt(cpf.charAt(9)) !== resto) return false;
+
+            soma = 0;
+            for (let i = 1; i <= 10; i++) soma += parseInt(cpf.charAt(i - 1)) * (12 - i);
+            resto = (soma * 10) % 11;
+            if ((resto === 10 || resto === 11) ? parseInt(cpf.charAt(10)) !== 0 : parseInt(cpf.charAt(10)) !== resto) return false;
+
+            return true;
+          }
+
+          
+
+          // Função de validação do formulário
+          document.getElementById("formulario").addEventListener("submit", function(event) {
+            let isValid = true;
+
+            // Obtém todos os campos do formulário
+            const nome = document.querySelector("[name='nome']").value;
+            const email = document.querySelector("[name='email']").value;
+            const celular = document.querySelector("[name='celular']").value;
+            const cpf = document.querySelector("[name='cpf']").value;
+            const senha = document.querySelector("[name='senha']").value;
+            const endereco = document.querySelector("[name='endereco']").value;
+            const cidade = document.querySelector("[name='cidade']").value;
+            const bairro = document.querySelector("[name='bairro']").value;
+            const cep = document.querySelector("[name='aprovado']").value;
+
+            // Verificação de campos vazios
+            if (!nome || !email || !celular || !cpf || !senha || !endereco || !cidade || !bairro || !cep) {
+              alert("Por favor, preencha todos os campos.");
+              isValid = false;
+            }
+
+            // Validação do CPF
+            if (!validarCPF(cpf)) {
+              alert("CPF inválido.");
+              isValid = false;
+            }
+
+           
+
+            // Se houver algum erro, impede o envio do formulário
+            if (!isValid) {
+              event.preventDefault();
+            }
+          });
+        
+        
+        </script>
     </body>
 </html>

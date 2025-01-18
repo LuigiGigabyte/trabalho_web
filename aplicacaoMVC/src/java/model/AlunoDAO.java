@@ -1,5 +1,6 @@
 package model;
 
+import entidade.Administrador;
 import entidade.Aluno;
 import java.sql.*;
 import java.util.ArrayList;
@@ -119,5 +120,36 @@ public class AlunoDAO implements Dao<Aluno> {
             System.err.println("Erro ao listar alunos: " + e.getMessage());
         }
         return alunos;
+    }
+    
+    public Aluno Logar(Aluno aluno) throws Exception {
+        Conexao conexao = new Conexao();
+        try {
+            PreparedStatement sql = conexao.getConexao().prepareStatement("SELECT * FROM alunos WHERE cpf=? and senha =? LIMIT 1");
+            sql.setString(1, aluno.getCpf());
+            sql.setString(2, aluno.getSenha());
+            ResultSet resultado = sql.executeQuery();
+            if (resultado != null) {
+                while (resultado.next()) {
+                    aluno.setId(Integer.parseInt(resultado.getString("ID")));
+                    aluno.setNome(resultado.getString("NOME"));
+                    //aluno.setCpf(resultado.getString("CPF"));
+                    aluno.setEndereco(resultado.getString("ENDERECO"));
+                    //aluno.setSenha(resultado.getString("SENHA"));
+                    aluno.setEmail(resultado.getString("EMAIL"));
+                    aluno.setCelular(resultado.getString("CELULAR"));
+                    aluno.setCidade(resultado.getString("CIDADE"));
+                    aluno.setBairro(resultado.getString("BAIRRO"));
+                    aluno.setCep(resultado.getString("CEP"));
+                }
+            }
+            return aluno;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("Query de select (get) incorreta");
+        } finally {
+            conexao.closeConexao();
+        }
     }
 }

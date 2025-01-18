@@ -29,7 +29,7 @@ public class Administrador {
         this.cpf = "";
         this.endereco = "";
         this.senha = "";
-        this.aprovado = "n";
+        this.aprovado = "N";
     }
 
     // Getters e Setters

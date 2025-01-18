@@ -54,12 +54,18 @@ public class AutenticaController extends HttpServlet {
             }
 
             if (administradorObtido.getId() != 0) {
-                HttpSession session = request.getSession();
-                session.setAttribute("administrador", administradorObtido);
+                if(!administradorObtido.getAprovado().toLowerCase().equals("s")){
+                    request.setAttribute("msgError", "Usuário não aprovado");
+                    rd = request.getRequestDispatcher("/views/autenticacao/formLogin.jsp");
+                    rd.forward(request, response);
+                }else{
+                    HttpSession session = request.getSession();
+                    session.setAttribute("administrador", administradorObtido);
 
-                rd = request.getRequestDispatcher("/admin/dashboard");
-                rd.forward(request, response);
-
+                    rd = request.getRequestDispatcher("/admin/dashboard");
+                    rd.forward(request, response);
+                }
+                
             } else {
                 request.setAttribute("msgError", "Usuário e/ou senha incorreto");
                 rd = request.getRequestDispatcher("/views/autenticacao/formLogin.jsp");

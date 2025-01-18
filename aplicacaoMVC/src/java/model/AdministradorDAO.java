@@ -123,6 +123,7 @@ public class AdministradorDAO implements Dao<Administrador> {
                     AdministradorObtido.setCpf(resultado.getString("CPF"));
                     AdministradorObtido.setEndereco(resultado.getString("ENDERECO"));
                     AdministradorObtido.setSenha(resultado.getString("SENHA"));
+                    AdministradorObtido.setAprovado(resultado.getString("APROVADO"));
                 }
             }
             return AdministradorObtido;

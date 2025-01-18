@@ -22,7 +22,7 @@
                             <a class="nav-link" href="/aplicacaoMVC/admin/logOut">Logout</a>
                 <%  } else { %>
                 
-                            <a class="nav-link" href="/aplicacaoMVC/MostrarComentarios">Coment&aacute;rios</a>
+                            <!-- <a class="nav-link" href="/aplicacaoMVC/MostrarComentarios">Coment&aacute;rios</a> -->
                             <a class="nav-link" href="/aplicacaoMVC/AutenticaController?acao=Login">Login</a>
                 <%    }
                     }%>

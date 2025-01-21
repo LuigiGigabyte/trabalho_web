@@ -1,6 +1,8 @@
 package model;
 
+import entidade.Aluno;
 import entidade.Professor;
+import entidade.Turma;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -105,5 +107,67 @@ public class ProfessorDAO implements Dao<Professor> {
             System.err.println("Erro ao listar professores: " + e.getMessage());
         }
         return professores;
+    }
+    
+     public Professor Logar(Professor profesor) throws Exception {
+        Conexao conexao = new Conexao();
+        try {
+            PreparedStatement sql = conexao.getConexao().prepareStatement("SELECT * FROM professores WHERE cpf=? and senha =? LIMIT 1");
+            sql.setString(1, profesor.getCpf());
+            sql.setString(2, profesor.getSenha());
+            ResultSet resultado = sql.executeQuery();
+            if (resultado != null) {
+                while (resultado.next()) {
+                    profesor.setId(Integer.parseInt(resultado.getString("ID")));
+                    profesor.setNome(resultado.getString("NOME"));
+                    //aluno.setCpf(resultado.getString("CPF"));
+                    //profesor.setEndereco(resultado.getString("ENDERECO"));
+                    //aluno.setSenha(resultado.getString("SENHA"));
+                    profesor.setEmail(resultado.getString("EMAIL"));
+                    //profesor.setCelular(resultado.getString("CELULAR"));
+                    //profesor.setCidade(resultado.getString("CIDADE"));
+                    //profesor.setBairro(resultado.getString("BAIRRO"));
+                    //profesor.setCep(resultado.getString("CEP"));
+                }
+            }
+            return profesor;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("Query de select (get) incorreta");
+        } finally {
+            conexao.closeConexao();
+        }
+    }
+     
+     public ArrayList<Turma> getNotas(Professor professor) {
+        ArrayList<Turma> turmas = new ArrayList<>();
+        String query = "SELECT * FROM Turmas where professor_id = ? ";
+
+        Conexao conexao = new Conexao();
+        try {
+            PreparedStatement sql = conexao.getConexao().prepareStatement(query);
+            sql.setInt(1, professor.getId());
+            ResultSet resultado = sql.executeQuery();
+
+
+            while (resultado.next()) {
+
+                Turma turma = new Turma();
+                turma.setId(resultado.getInt("id"));
+                turma.setCodigoTurma(resultado.getString("codigo_turma"));
+                turma.setDisciplinaId(resultado.getInt("disciplina_id"));
+                turma.setAlunoId(resultado.getInt("aluno_id"));
+                turma.setNota(resultado.getDouble("nota"));
+               
+                turmas.add(turma);
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar turmas com alunos e notas: " + e.getMessage());
+        }finally {
+            conexao.closeConexao();
+        }
+
+        return turmas;
     }
 }

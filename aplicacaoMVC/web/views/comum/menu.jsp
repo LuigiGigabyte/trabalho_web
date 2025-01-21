@@ -3,6 +3,7 @@
     pageEncoding="UTF-8" 
     import="entidade.Administrador"
     import="entidade.Aluno"
+    import="entidade.Professor"
 %>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
@@ -19,6 +20,7 @@
                     if (sessao != null) {
                         Administrador AdministradorLogado = (Administrador) session.getAttribute("administrador");
                         Aluno alunoLogado = (Aluno) session.getAttribute("alunoLogado");
+                        Professor professorLogado = (Professor) session.getAttribute("professorLogado");
                         if (AdministradorLogado != null) { %>
                             <a class="nav-link" href="/aplicacaoMVC/admin/AlunoController?acao=Listar">Alunos</a>
                             <a class="nav-link" href="/aplicacaoMVC/admin/ProfessorController?acao=Listar">Professores</a>
@@ -33,10 +35,15 @@
                                     <a class="nav-link" href="/aplicacaoMVC/admin/TurmaController?acao=Listar">Turmas</a>
                                     <a class="nav-link" href="/aplicacaoMVC/aluno/NotaController">Notas</a>
                                     <a class="nav-link" href="/aplicacaoMVC/logOut">Logout</a>
-                    <%          }   else {%>
+                    <%          }   else{
+                                        if(professorLogado != null){ %>
+                                            <a class="nav-link" href="/aplicacaoMVC/professor/NotaController">Notas</a>
+                                            <a class="nav-link" href="/aplicacaoMVC/logOut">Logout</a>
+                    <%                  } else {%>
                     
-                            <a class="nav-link" href="/aplicacaoMVC/AutenticaController?acao=Login">Login</a>
-                    <%              }
+                                            <a class="nav-link" href="/aplicacaoMVC/AutenticaController?acao=Login">Login</a>
+                    <%                  }
+                                    }
                             }
                     }%>
 

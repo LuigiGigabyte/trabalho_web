@@ -36,7 +36,7 @@ public class Login {
             conexao.closeConexao();
         }
     }
-    public Boolean ExisteProfessor(String cpf, String senha)throws Exception{
+    public Boolean ExisteProfessor(String cpf, String senha){
         Conexao conexao = new Conexao();
         try {
             PreparedStatement sql = conexao.getConexao().prepareStatement("SELECT * FROM Professores WHERE cpf=? and senha =? LIMIT 1");

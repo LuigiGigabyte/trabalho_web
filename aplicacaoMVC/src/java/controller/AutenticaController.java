@@ -78,12 +78,11 @@ public class AutenticaController extends HttpServlet {
                     AlunoDAO alunoDao =  new AlunoDAO();
 
                     try {
-                        System.out.println("aluno");
                         alunoObtido = alunoDao.Logar(aluno);
                         HttpSession session = request.getSession();
-                        session.setAttribute("aluno", alunoObtido);
+                        session.setAttribute("alunoLogado", alunoObtido);
 
-                        rd = request.getRequestDispatcher("/views/aluno/dashboard/areaRestrita.jsp");
+                        rd = request.getRequestDispatcher("/aluno/dashboard");
                         rd.forward(request, response);
                     } catch (Exception ex) {
                         System.out.println(ex.getMessage());

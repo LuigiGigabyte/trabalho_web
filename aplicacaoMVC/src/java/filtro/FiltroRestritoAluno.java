@@ -12,15 +12,15 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebFilter(filterName = "filtroRestritoAluno", urlPatterns = {"/aluno/*"})
-public class filtroRestritoAluno implements Filter {
+@WebFilter(filterName = "FiltroRestritoAluno", urlPatterns = {"/aluno/*"})
+public class FiltroRestritoAluno implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
 
-        Aluno aluno = (Aluno)((HttpServletRequest) request).getSession().getAttribute("aluno");
+        Aluno aluno = (Aluno)((HttpServletRequest) request).getSession().getAttribute("alunoLogado");
 
         if ((aluno != null) && (!((String) aluno.getNome()).isEmpty())) {
             chain.doFilter(request, response);

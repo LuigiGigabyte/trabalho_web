@@ -2,6 +2,8 @@ package model;
 
 import entidade.Administrador;
 import entidade.Aluno;
+import entidade.Disciplina;
+import entidade.Turma;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -151,5 +153,35 @@ public class AlunoDAO implements Dao<Aluno> {
         } finally {
             conexao.closeConexao();
         }
+    }
+    
+    public ArrayList<Turma> getNotas(Aluno aluno) {
+        ArrayList<Turma> turmas = new ArrayList<>();
+        String query = "SELECT * FROM Turmas where aluno_id = ? ";
+
+        Conexao conexao = new Conexao();
+        try {
+            PreparedStatement sql = conexao.getConexao().prepareStatement(query);
+            sql.setInt(1, aluno.getId());
+            ResultSet resultado = sql.executeQuery();
+
+
+            while (resultado.next()) {
+
+                Turma turma = new Turma();
+                turma.setId(resultado.getInt("id"));
+                turma.setCodigoTurma(resultado.getString("codigo_turma"));
+                turma.setDisciplinaId(resultado.getInt("disciplina_id"));
+                turma.setNota(resultado.getDouble("nota"));
+               
+                turmas.add(turma);
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar turmas com alunos e notas: " + e.getMessage());
+        }finally {
+            conexao.closeConexao();
+        }
+
+        return turmas;
     }
 }

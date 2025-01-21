@@ -21,7 +21,7 @@
 
                 <h1>Área Restrita</h1>
                 <%
-                    Aluno alunoLogado = (Aluno) session.getAttribute("aluno");
+                    Aluno alunoLogado = (Aluno) session.getAttribute("alunoLogado");
                     out.println("<h3>Usuário logado com sucesso</h3>");
                     out.println("<h2>Nome: " + alunoLogado.getNome() + "</h2>");
                 %>

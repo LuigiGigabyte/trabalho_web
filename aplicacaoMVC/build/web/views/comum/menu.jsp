@@ -18,7 +18,7 @@
                     
                     if (sessao != null) {
                         Administrador AdministradorLogado = (Administrador) session.getAttribute("administrador");
-                        Aluno alunoLogado = (Aluno) session.getAttribute("aluno");
+                        Aluno alunoLogado = (Aluno) session.getAttribute("alunoLogado");
                         if (AdministradorLogado != null) { %>
                             <a class="nav-link" href="/aplicacaoMVC/admin/AlunoController?acao=Listar">Alunos</a>
                             <a class="nav-link" href="/aplicacaoMVC/admin/ProfessorController?acao=Listar">Professores</a>
@@ -31,7 +31,7 @@
                     <%  }   else{
                                 if(alunoLogado != null){ %>
                                     <a class="nav-link" href="/aplicacaoMVC/admin/TurmaController?acao=Listar">Turmas</a>
-                                    <a class="nav-link" href="">Notas</a>
+                                    <a class="nav-link" href="/aplicacaoMVC/aluno/NotaController">Notas</a>
                                     <a class="nav-link" href="/aplicacaoMVC/logOut">Logout</a>
                     <%          }   else {%>
                     

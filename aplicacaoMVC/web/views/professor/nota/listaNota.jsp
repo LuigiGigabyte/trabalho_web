@@ -31,6 +31,7 @@
                                 <th scope="col">Disciplina</th>
                                 <th scope="col">Aluno</th>
                                 <th scope="col">Nota</th>
+                                <th scope="col">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -48,7 +49,11 @@
                                     out.println("<td>" + disciplina.getNome() + "</td>");
                                     out.println("<td>" + aluno.getNome() + "</td>");
                                     out.println("<td>" + turma.getNota() + "</td>");
-                                    out.println("</tr>");
+                                    %>
+                                    <td>
+                                        <a href="/aplicacaoMVC/professor/NotaController?acao=Alterar&id=<%=turma.getId()%>" class="btn btn-warning">Alterar Nota</a>
+                            
+                                    <% out.println("</tr>");
                                     
                                 }
                             %>

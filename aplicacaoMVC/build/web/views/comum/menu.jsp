@@ -37,7 +37,7 @@
                                     <a class="nav-link" href="/aplicacaoMVC/logOut">Logout</a>
                     <%          }   else{
                                         if(professorLogado != null){ %>
-                                            <a class="nav-link" href="/aplicacaoMVC/professor/NotaController">Notas</a>
+                                            <a class="nav-link" href="/aplicacaoMVC/professor/NotaController?acao=Listar">Notas</a>
                                             <a class="nav-link" href="/aplicacaoMVC/logOut">Logout</a>
                     <%                  } else {%>
                     

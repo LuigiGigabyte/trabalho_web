@@ -76,7 +76,7 @@
                                             <td><%= professor.getNome() %></td>
                                             
                                             <td>
-                                                <a href="/aplicacaoMVC/admin/TurmaController?acao=Alterar&id=<%=codigoTurma%>" class="btn btn-warning">Alterar</a>
+                                                <a href="/aplicacaoMVC/admin/TurmaController?acao=Alterar&id=<%=turmaExemplo.getId()%>" class="btn btn-warning">Alterar</a>
                                                 <a href="/aplicacaoMVC/admin/TurmaController?acao=Excluir&id=<%=codigoTurma%>" class="btn btn-danger">Excluir</a>
                                             </td>
                                         </tr>

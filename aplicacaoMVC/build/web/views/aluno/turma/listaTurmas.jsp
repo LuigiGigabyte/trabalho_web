@@ -24,11 +24,7 @@
         <div class="container">
             <jsp:include page="../../comum/menu.jsp" />
             <div class="mt-5">
-                <h1>Área Restrita</h1>
                 <h2>Lista de Turmas</h2>
-                <a href="/aplicacaoMVC/admin/TurmaController?acao=Incluir" class="mb-2 btn btn-primary">Incluir</a>
-
-                <!-- Lista de Turmas -->
                 <div class="table-responsive">
                     <h3>Turmas Disponíveis</h3>
                     <table class="table table-hover">

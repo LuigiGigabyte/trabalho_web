@@ -52,7 +52,22 @@ public class TurmaDAO implements Dao<Turma> {
             System.err.println("Erro ao inserir turma: " + e.getMessage());
         }
     }
+    public void insertAluno(Turma turma, int alunoId) {
+        String query = "INSERT INTO turmas (professor_id, disciplina_id, aluno_id, codigo_turma, nota) VALUES (?, ?, ?, ?, ?)";
 
+        Conexao conexao = new Conexao();
+        try {
+            PreparedStatement sql = conexao.getConexao().prepareStatement(query);
+            sql.setInt(1, turma.getProfessorId());
+            sql.setInt(2, turma.getDisciplinaId());
+            sql.setInt(3, alunoId);
+            sql.setString(4, turma.getCodigoTurma());
+            sql.setDouble(5, turma.getNota());
+            sql.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Erro ao inserir turma: " + e.getMessage());
+        }
+    }
     @Override
     public void update(Turma turma) {
         String query = "UPDATE turmas SET professor_id = ?, disciplina_id = ?, aluno_id = ?, codigo_turma = ?, nota = ? WHERE id = ?";
@@ -111,6 +126,62 @@ public class TurmaDAO implements Dao<Turma> {
             System.err.println("Erro ao listar turmas: " + e.getMessage());
         }
         return turmas;
+    }
+    public ArrayList<Turma> getTurmasNaoInscritas(int alunoId) {
+        ArrayList<Turma> turmasNaoInscritas = new ArrayList<>();
+        String query = "SELECT DISTINCT * FROM turmas t WHERE t.codigo_turma NOT IN "
+                + "(SELECT DISTINCT codigo_turma FROM turmas WHERE aluno_id = ?)";
+
+        Conexao conexao = new Conexao();
+        try {
+            PreparedStatement sql = conexao.getConexao().prepareStatement(query);
+            sql.setInt(1, alunoId);
+            ResultSet resultado = sql.executeQuery();
+
+            while (resultado.next()) {
+                Turma turma = new Turma(
+                        resultado.getInt("id"),
+                        resultado.getInt("professor_id"),
+                        resultado.getInt("disciplina_id"),
+                        resultado.getInt("aluno_id"),
+                        resultado.getString("codigo_turma"),
+                        resultado.getDouble("nota")
+                );
+                turmasNaoInscritas.add(turma);
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar turmas não inscritas: " + e.getMessage());
+        }
+
+        return turmasNaoInscritas;
+    }
+    public ArrayList<Turma> getTurmasInscritas(int alunoId) {
+        ArrayList<Turma> turmasNaoInscritas = new ArrayList<>();
+                String query = "SELECT DISTINCT * FROM turmas WHERE aluno_id = ?";
+
+
+        Conexao conexao = new Conexao();
+        try {
+            PreparedStatement sql = conexao.getConexao().prepareStatement(query);
+            sql.setInt(1, alunoId);
+            ResultSet resultado = sql.executeQuery();
+
+            while (resultado.next()) {
+                Turma turma = new Turma(
+                        resultado.getInt("id"),
+                        resultado.getInt("professor_id"),
+                        resultado.getInt("disciplina_id"),
+                        alunoId,
+                        resultado.getString("codigo_turma"),
+                        resultado.getDouble("nota")
+                );
+                turmasNaoInscritas.add(turma);
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar turmas não inscritas: " + e.getMessage());
+        }
+
+        return turmasNaoInscritas;
     }
     public ArrayList<Turma> getAllTurmasComAlunosNotas() {
         ArrayList<Turma> turmas = new ArrayList<>();

@@ -32,7 +32,7 @@
                             
                     <%  }   else{
                                 if(alunoLogado != null){ %>
-                                    <a class="nav-link" href="/aplicacaoMVC/admin/TurmaController?acao=Listar">Turmas</a>
+                                    <a class="nav-link" href="/aplicacaoMVC/aluno/TurmaController?acao=Listar">Turmas</a>
                                     <a class="nav-link" href="/aplicacaoMVC/aluno/NotaController">Notas</a>
                                     <a class="nav-link" href="/aplicacaoMVC/logOut">Logout</a>
                     <%          }   else{

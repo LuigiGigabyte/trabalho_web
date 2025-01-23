@@ -24,7 +24,7 @@
             <div class="mt-5">
                 <h1>Área Restrita</h1>
                 <h2>Lista de Turmas</h2>
-
+                
                 <a href="/aplicacaoMVC/admin/TurmaController?acao=Incluir" class="mb-2 btn btn-primary">Incluir</a>
                 <div class="table-responsive">
                     <table class="table table-hover">
@@ -76,7 +76,7 @@
                                             <td><%= professor.getNome() %></td>
                                             
                                             <td>
-                                                <a href="/aplicacaoMVC/admin/TurmaController?acao=Alterar&id=<%=codigoTurma%>" class="btn btn-warning">Alterar</a>
+                                                <a href="/aplicacaoMVC/admin/TurmaController?acao=Alterar&id=<%=turmaExemplo.getId()%>" class="btn btn-warning">Alterar</a>
                                                 <a href="/aplicacaoMVC/admin/TurmaController?acao=Excluir&id=<%=codigoTurma%>" class="btn btn-danger">Excluir</a>
                                             </td>
                                         </tr>

@@ -40,6 +40,10 @@
                             <% ArrayList<Turma> listaTurmas = (ArrayList<Turma>) request.getAttribute("listaTurmas"); %>
                             <% DisciplinaDAO disciplinaDAO = new DisciplinaDAO(); %>
                             <% ProfessorDAO professorDAO = new ProfessorDAO(); %>
+                            <%         
+                                HttpSession sessao = request.getSession(false);
+                                
+                            %>
 
                             <%
                                 for (Turma turma : listaTurmas) {
@@ -51,15 +55,7 @@
                                     <td><%= disciplina.getNome() %></td>
                                     <td><%= professor.getNome() %></td>
                                     <td>
-                                        <a href="/aplicacaoMVC/aluno/TurmaController?acao=Incluir&id=<%=turma.getId()%>&aluno=<%
-                                            HttpSession sessao = request.getSession(false);
-                                            if (sessao != null) {
-                                                Aluno alunoLogado = (Aluno) sessao.getAttribute("alunoLogado");
-                                                if (alunoLogado != null) {
-                                                    out.print(alunoLogado.getId());
-                                                }
-                                            }
-                                        %>"
+                                        <a href="/aplicacaoMVC/aluno/TurmaController?acao=Incluir&codigo_turma=<%=turma.getCodigoTurma()%>&disciplina_id=<%=turma.getDisciplinaId()%>&professor_id=<%=turma.getProfessorId()%>&aluno=<%=((Aluno) sessao.getAttribute("alunoLogado")).getId()%>"
                                            class="btn btn-warning">Inscrever-se</a>
                                     </td>
                                 </tr>
@@ -77,6 +73,7 @@
                                 <th scope="col">Código da Turma</th>
                                 <th scope="col">Disciplina</th>
                                 <th scope="col">Professor</th>
+                                <!-- <th scope="col">Ações</th> -->
                             </tr>
                         </thead>
                         <tbody>
@@ -90,7 +87,11 @@
                                 <tr>
                                     <td><%= turma.getCodigoTurma() %></td>
                                     <td><%= disciplina.getNome() %></td>
-                                    <td><%= professor.getNome() %></td> 
+                                    <td><%= professor.getNome() %></td>
+                                    <!--  <td>
+                                        <a href="/aplicacaoMVC/aluno/TurmaController?acao=Excluir&codigo_turma=<%=turma.getCodigoTurma()%>&disciplina_id=<%=turma.getDisciplinaId()%>&professor_id=<%=turma.getProfessorId()%>&aluno=<%=((Aluno) sessao.getAttribute("alunoLogado")).getId()%>"
+                                           class="btn btn-danger">Sair</a>
+                                    </td> -->
                                 </tr>
                             <% } %>
                         </tbody>

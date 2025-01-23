@@ -39,6 +39,10 @@ public class TurmaController extends HttpServlet {
         request.setAttribute("listaDisciplinas", disciplinaDAO.getAll());
         request.setAttribute("listaAlunos", alunoDAO.getAll());
 
+        int turmaProfId;
+        int turmaDiscId;
+        String cod_turma;
+        int alunoId;
 
         RequestDispatcher rd;
 
@@ -54,12 +58,17 @@ public class TurmaController extends HttpServlet {
                 rd.forward(request, response);
                 break;
             case "Incluir":
-                int turmaId = Integer.parseInt(request.getParameter("id"));
-                int alunoId = Integer.parseInt(request.getParameter("aluno"));
-                turma = turmaDAO.get(turmaId);
+                turmaProfId = Integer.parseInt(request.getParameter("professor_id"));
+                turmaDiscId = Integer.parseInt(request.getParameter("disciplina_id"));
+                cod_turma = request.getParameter("codigo_turma");
+                alunoId = Integer.parseInt(request.getParameter("aluno"));
+                turma = new Turma();
                 turma.setAlunoId(alunoId);
+                turma.setCodigoTurma(cod_turma);
+                turma.setDisciplinaId(turmaDiscId);
+                turma.setProfessorId(turmaProfId);
                 request.setAttribute("turma", turma);
-                if(turmaDAO.getTurmaCheia(turma.getProfessorId(), turma.getDisciplinaId(), turma.getCodigoTurma()) == true){
+                if(turmaDAO.getTurmaCheia(turma.getProfessorId(), turma.getDisciplinaId(), turma.getCodigoTurma())){
                     msgOperacao = "Não há vagas para essa turma";
                 }
                 else{
@@ -71,6 +80,29 @@ public class TurmaController extends HttpServlet {
                 rd = request.getRequestDispatcher("/views/comum/showMessage.jsp");
                 rd.forward(request, response);
                 break;
+            case "Excluir":
+                turmaProfId = Integer.parseInt(request.getParameter("professor_id"));
+                turmaDiscId = Integer.parseInt(request.getParameter("disciplina_id"));
+                cod_turma = request.getParameter("codigo_turma");
+                alunoId = Integer.parseInt(request.getParameter("aluno"));
+                turma = new Turma();
+                turma.setAlunoId(alunoId);
+                turma.setCodigoTurma(cod_turma);
+                turma.setDisciplinaId(turmaDiscId);
+                turma.setProfessorId(turmaProfId);
+                request.setAttribute("turma", turma);
+                Turma turmaCompleta = turmaDAO.getByCod(turma.getProfessorId(), turma.getDisciplinaId(), turma.getCodigoTurma(), turma.getAlunoId());
+                if(turmaCompleta.getNota() != 99){
+                    msgOperacao = "Não pode sair, pois professor ja alterou a nota";
+                }
+                else{
+                    turmaDAO.delete(turmaCompleta.getId());
+                    msgOperacao = "Saída realizada com sucesso!";
+                }
+                request.setAttribute("msgOperacaoRealizada", msgOperacao);
+                request.setAttribute("link", "/aplicacaoMVC/aluno/TurmaController?acao=Listar");
+                rd = request.getRequestDispatcher("/views/comum/showMessage.jsp");
+                rd.forward(request, response);
         }
     }
 }

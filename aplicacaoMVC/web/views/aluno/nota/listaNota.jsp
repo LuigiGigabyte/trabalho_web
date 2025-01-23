@@ -37,14 +37,19 @@
                                 ArrayList<Turma> listaTurmas = (ArrayList<Turma>) request.getAttribute("listaTurmas");
                                 DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
                                 
+                                
+                                
                                 for (Turma turma : listaTurmas) {
                                     Disciplina disciplina = disciplinaDAO.get(turma.getDisciplinaId());
-                                        
+                                    Double nota = turma.getNota();
+                                    if(nota > 90){
+                                        nota = 0.0;
+                                    }
                                         
                                     out.println("<tr>");
                                     out.println("<td>" + turma.getCodigoTurma() + "</td>");
                                     out.println("<td>" + disciplina.getNome() + "</td>");
-                                    out.println("<td>" + turma.getNota() + "</td>");
+                                    out.println("<td>" + nota + "</td>");
                                     out.println("</tr>");
                                     
                                 }

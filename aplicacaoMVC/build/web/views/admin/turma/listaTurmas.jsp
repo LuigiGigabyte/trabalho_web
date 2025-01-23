@@ -24,7 +24,7 @@
             <div class="mt-5">
                 <h1>Área Restrita</h1>
                 <h2>Lista de Turmas</h2>
-
+                
                 <a href="/aplicacaoMVC/admin/TurmaController?acao=Incluir" class="mb-2 btn btn-primary">Incluir</a>
                 <div class="table-responsive">
                     <table class="table table-hover">

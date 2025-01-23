@@ -57,53 +57,20 @@ public class TurmaController extends HttpServlet {
                 int turmaId = Integer.parseInt(request.getParameter("id"));
                 int alunoId = Integer.parseInt(request.getParameter("aluno"));
                 turma = turmaDAO.get(turmaId);
+                turma.setAlunoId(alunoId);
                 request.setAttribute("turma", turma);
-                turmaDAO.insertAluno(turma, alunoId);
-                msgOperacao = "Inscrição realizada com sucesso!";
+                if(turmaDAO.getTurmaCheia(turma.getProfessorId(), turma.getDisciplinaId(), turma.getCodigoTurma()) == true){
+                    msgOperacao = "Não há vagas para essa turma";
+                }
+                else{
+                    turmaDAO.insertAluno(turma, alunoId);
+                    msgOperacao = "Inscrição realizada com sucesso!";
+                }
                 request.setAttribute("msgOperacaoRealizada", msgOperacao);
                 request.setAttribute("link", "/aplicacaoMVC/aluno/TurmaController?acao=Listar");
                 rd = request.getRequestDispatcher("/views/comum/showMessage.jsp");
                 rd.forward(request, response);
                 break;
-        }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        String acao = request.getParameter("btEnviar");
-        String msgOperacao = "";
-        String link = "/aplicacaoMVC/aluno/TurmaController?acao=Listar";
-
-        try {
-            Turma turma = new Turma();
-            turma.setCodigoTurma(request.getParameter("codigo_turma"));
-            turma.setProfessorId(Integer.parseInt(request.getParameter("professor_id")));
-            turma.setDisciplinaId(Integer.parseInt(request.getParameter("disciplina_id")));
-            turma.setAlunoId(Integer.parseInt(request.getParameter("aluno_id")));
-            turma.setNota(Double.parseDouble(request.getParameter("nota")));
-
-            TurmaDAO turmaDAO = new TurmaDAO();
-            RequestDispatcher rd;
-
-            switch (acao) {
-                case "Incluir":
-                    turmaDAO.insert(turma);
-                    msgOperacao = "Cadastro realizado com sucesso!";
-                    break;
-                default:
-                    msgOperacao = "Ação inválida.";
-            }
-
-            request.setAttribute("msgOperacaoRealizada", msgOperacao);
-            request.setAttribute("link", link);
-            rd = request.getRequestDispatcher("/views/comum/showMessage.jsp");
-            rd.forward(request, response);
-
-        } catch (Exception e) {
-            request.setAttribute("msgError", "Erro ao processar operação: " + e.getMessage());
-            request.getRequestDispatcher("/views/comum/showMessage.jsp").forward(request, response);
         }
     }
 }

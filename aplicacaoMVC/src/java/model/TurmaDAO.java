@@ -34,7 +34,28 @@ public class TurmaDAO implements Dao<Turma> {
         }
         return turma;
     }
+    public boolean getTurmaCheia(int professor_id, int disciplina_id, String codigo_turma) {
+        String query = "SELECT professor_id, disciplina_id, codigo_turma, "
+                + "COUNT(*) FROM turmas t WHERE professor_id = ? "
+                + "AND disciplina_id = ? AND codigo_turma = ?" +
+                "GROUP BY professor_id, disciplina_id, codigo_turma HAVING COUNT(*) > 2";
 
+        Conexao conexao = new Conexao();
+        try {
+            PreparedStatement sql = conexao.getConexao().prepareStatement(query);
+            sql.setInt(1, professor_id);
+            sql.setInt(2, disciplina_id);
+            sql.setString(3, codigo_turma);
+            ResultSet resultado = sql.executeQuery();
+
+            if (resultado.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar turma: " + e.getMessage());
+        }
+        return false;
+    }
     @Override
     public void insert(Turma turma) {
         String query = "INSERT INTO turmas (professor_id, disciplina_id, aluno_id, codigo_turma, nota) VALUES (?, ?, ?, ?, ?)";
@@ -62,7 +83,7 @@ public class TurmaDAO implements Dao<Turma> {
             sql.setInt(2, turma.getDisciplinaId());
             sql.setInt(3, alunoId);
             sql.setString(4, turma.getCodigoTurma());
-            sql.setDouble(5, turma.getNota());
+            sql.setDouble(5, 0);
             sql.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Erro ao inserir turma: " + e.getMessage());

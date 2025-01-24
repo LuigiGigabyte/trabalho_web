@@ -170,4 +170,24 @@ public class ProfessorDAO implements Dao<Professor> {
 
         return turmas;
     }
+     
+      public boolean getCheioDeTurmas(int professor_id) {
+        String query = "SELECT DISTINCT disciplina_id, codigo_turma "
+                + "FROM turmas WHERE professor_id = ? ";
+               
+
+        Conexao conexao = new Conexao();
+        try {
+            PreparedStatement sql = conexao.getConexao().prepareStatement(query);
+            sql.setInt(1, professor_id);
+            ResultSet resultado = sql.executeQuery();
+            resultado.next();
+            if (resultado.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar turma: " + e.getMessage());
+        }
+        return false;
+    }
 }

@@ -1,9 +1,11 @@
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
 <%@page import="entidade.Professor"%>
+<%@page import="entidade.Aluno"%>
 <%@page import="entidade.Disciplina"%>
 <%@page import="model.DisciplinaDAO"%>
 <%@page import="model.ProfessorDAO"%>
+<%@page import="model.AlunoDAO"%>
 <%@page import="entidade.Turma"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
@@ -33,6 +35,8 @@
                                 <th scope="col">Código da Turma</th>
                                 <th scope="col">Disciplina</th>
                                 <th scope="col">Professor</th>
+                                <th scope="col">Aluno</th>
+                                <th scope="col">Nota</th>
                                 <th scope="col">Ações</th>
                             </tr>
                         </thead>
@@ -44,40 +48,34 @@
    
                                 DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
                                 ProfessorDAO professorDAO = new ProfessorDAO();
+                                AlunoDAO alunodao = new AlunoDAO();
+                                        
                                 
 
-                                Map<String, ArrayList<Turma>> turmasPorCodigo = new HashMap<>();
+                                
                                 
                                 
                                 for (Turma turma : listaTurmas) {
-                                    ArrayList<Turma> turmasComMesmoCodigo = turmasPorCodigo.get(turma.getCodigoTurma());
-                                    if (turmasComMesmoCodigo == null) {
-                                        turmasComMesmoCodigo = new ArrayList<>();
-                                        turmasPorCodigo.put(turma.getCodigoTurma(), turmasComMesmoCodigo);
-                                    }
-                                    turmasComMesmoCodigo.add(turma);
-                                }
-
-
-                                for (Map.Entry<String, ArrayList<Turma>> entry : turmasPorCodigo.entrySet()) {
-                                    String codigoTurma = entry.getKey();
-                                    ArrayList<Turma> turmasDoCodigo = entry.getValue();
                                     
-     
-                                    Turma turmaExemplo = turmasDoCodigo.get(0);
-                                    Disciplina disciplina = disciplinaDAO.get(turmaExemplo.getDisciplinaId());
-                                    Professor professor = professorDAO.get(turmaExemplo.getProfessorId());
+                                    
+                                    Disciplina disciplina = disciplinaDAO.get(turma.getDisciplinaId());
+                                    Professor professor = professorDAO.get(turma.getProfessorId());
+                                    Aluno aluno = alunodao.get(turma.getAlunoId());
                             %>
                                         <tr>
-                                            <td><%= codigoTurma %></td>
+                                            <td><%= turma.getCodigoTurma() %></td>
                                             
                                             <td><%= disciplina.getNome() %></td>
                                             
                                             <td><%= professor.getNome() %></td>
                                             
+                                            <td><%= aluno.getNome() %></td>
+                                            
+                                            <td><%= turma.getNota() %></td>
+                                            
                                             <td>
-                                                <a href="/aplicacaoMVC/admin/TurmaController?acao=Alterar&id=<%=turmaExemplo.getId()%>" class="btn btn-warning">Alterar</a>
-                                                <a href="/aplicacaoMVC/admin/TurmaController?acao=Excluir&id=<%=codigoTurma%>" class="btn btn-danger">Excluir</a>
+                                                <a href="/aplicacaoMVC/admin/TurmaController?acao=Alterar&id=<%=turma.getId()%>" class="btn btn-warning">Alterar</a>
+                                                <a href="/aplicacaoMVC/admin/TurmaController?acao=Excluir&id=<%=turma.getId()%>" class="btn btn-danger">Excluir</a>
                                             </td>
                                         </tr>
                             <%  

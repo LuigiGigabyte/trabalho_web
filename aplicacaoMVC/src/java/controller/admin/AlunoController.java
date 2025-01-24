@@ -1,6 +1,7 @@
 package controller.admin;
 
 import entidade.Aluno;
+import entidade.Turma;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.AlunoDAO;
+import model.TurmaDAO;
 
 @WebServlet(name = "AlunoController", urlPatterns = {"/admin/AlunoController"})
 public class AlunoController extends HttpServlet {
@@ -50,6 +52,13 @@ public class AlunoController extends HttpServlet {
                     break;
                 case "Excluir":
                     id = Integer.parseInt(request.getParameter("id"));
+                    TurmaDAO turmadao = new TurmaDAO();
+                    aluno = alunoDAO.get(id);
+                    ArrayList<Turma> turmasExcluir = alunoDAO.getNotas(aluno);
+                    for (Turma turma : turmasExcluir){
+                        turmadao.delete(turma.getId());
+                    }
+                    
                     alunoDAO.delete(id);
                     request.setAttribute("msgOperacaoRealizada", "Exclusão realizada com sucesso!");
                     request.setAttribute("link", "/aplicacaoMVC/admin/AlunoController?acao=Listar");

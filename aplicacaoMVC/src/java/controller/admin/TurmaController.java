@@ -1,6 +1,7 @@
 package controller.admin;
 
 import entidade.Turma;
+import entidade.Professor;
 import model.TurmaDAO; 
 import model.ProfessorDAO; 
 import model.DisciplinaDAO; 
@@ -30,6 +31,11 @@ public class TurmaController extends HttpServlet {
         ProfessorDAO professorDAO = new ProfessorDAO();
         DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
         AlunoDAO alunoDAO = new AlunoDAO();
+        
+        int turmaid;
+        int turmaProfId;
+        int turmaDiscId;
+        String cod_turma;
 
         request.setAttribute("acao", acao);
 
@@ -52,15 +58,23 @@ public class TurmaController extends HttpServlet {
                 rd.forward(request, response);
                 break;
             case "Alterar":
-                int turmaId = Integer.parseInt(request.getParameter("id"));
-                turma = turmaDAO.get(turmaId);
-                request.setAttribute("turma", turma);
+                turmaid = Integer.parseInt(request.getParameter("id"));
+                //turmaProfId = Integer.parseInt(request.getParameter("professor_id"));
+                //turmaDiscId = Integer.parseInt(request.getParameter("disciplina_id"));
+                //cod_turma = request.getParameter("codigo_turma");
+                //request.setAttribute("disciplina_id", turmaDiscId);
+                //request.setAttribute("professor_id", turmaProfId);
+                request.setAttribute("turma", turmaDAO.get(turmaid));
                 rd = request.getRequestDispatcher("/views/admin/turma/formTurma.jsp");
                 rd.forward(request, response);
                 break;
             case "Excluir":
-                turmaId = Integer.parseInt(request.getParameter("id"));
-                turmaDAO.delete(turmaId);
+                turmaid = Integer.parseInt(request.getParameter("id"));
+                //turmaProfId = Integer.parseInt(request.getParameter("professor_id"));
+                //turmaDiscId = Integer.parseInt(request.getParameter("disciplina_id"));
+                //cod_turma = request.getParameter("codigo_turma");
+                //turmaDAO.deleteByCod(turmaProfId, turmaDiscId, cod_turma);
+                turmaDAO.delete(turmaid);
                 request.setAttribute("msgOperacaoRealizada", "Exclusão realizada com sucesso!");
                 request.setAttribute("link", "/aplicacaoMVC/admin/TurmaController?acao=Listar");
                 rd = request.getRequestDispatcher("/views/comum/showMessage.jsp");
@@ -87,17 +101,26 @@ public class TurmaController extends HttpServlet {
 
             TurmaDAO turmaDAO = new TurmaDAO();
             RequestDispatcher rd;
+            ProfessorDAO professorDAO = new ProfessorDAO();
+            Professor professor = professorDAO.get(turma.getProfessorId());
 
             switch (acao) {
                 case "Incluir":
-                    System.out.println("TESTE TESTE TESTE TESTE TESTE TESTE");
-                    turmaDAO.insert(turma);
-                    msgOperacao = "Cadastro realizado com sucesso!";
+                    if(professorDAO.getCheioDeTurmas(professor.getId())){
+                        msgOperacao = "Professor em questao já está com 2 turmas";
+                    }else{
+                        turmaDAO.insert(turma);
+                        msgOperacao = "Cadastro realizado com sucesso!";
+                    }
                     break;
                 case "Alterar":
-                    turma.setId(Integer.parseInt(request.getParameter("id")));
-                    turmaDAO.update(turma);
-                    msgOperacao = "Alteração realizada com sucesso!";
+                    if(professorDAO.getCheioDeTurmas(professor.getId())){
+                        msgOperacao = "Professor em questao já está com 2 turmas";
+                    }else{
+                        turma.setId(Integer.parseInt(request.getParameter("id")));
+                        turmaDAO.update(turma);
+                        msgOperacao = "Alteração realizada com sucesso!";
+                    }
                     break;
                 case "Excluir":
                     int turmaId = Integer.parseInt(request.getParameter("id"));

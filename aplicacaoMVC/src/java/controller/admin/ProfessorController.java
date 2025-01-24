@@ -1,6 +1,7 @@
 package controller.admin;
 
 import entidade.Professor; // Importando a classe Professor
+import entidade.Turma;
 import model.ProfessorDAO; // Importando o DAO de Professor
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.TurmaDAO;
 
 @WebServlet(name = "ProfessorController", urlPatterns = {"/admin/ProfessorController"})
 public class ProfessorController extends HttpServlet {
@@ -43,6 +45,12 @@ public class ProfessorController extends HttpServlet {
                 break;
             case "Excluir":
                 int professorId = Integer.parseInt(request.getParameter("id"));
+                TurmaDAO turmadao = new TurmaDAO();
+                professor = professorDAO.get(professorId);
+                ArrayList<Turma> turmasExcluir = professorDAO.getNotas(professor);
+                for (Turma turma : turmasExcluir){
+                    turmadao.delete(turma.getId());
+                }
                 professorDAO.delete(professorId);
                 request.setAttribute("msgOperacaoRealizada", "Exclusão realizada com sucesso!");
                 request.setAttribute("link", "/aplicacaoMVC/admin/ProfessorController?acao=Listar");

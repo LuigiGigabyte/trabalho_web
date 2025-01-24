@@ -145,19 +145,37 @@ public class TurmaDAO implements Dao<Turma> {
     public void delete(int id) {
         
         
-        
-        String query = "DELETE FROM turmas WHERE codigo_turma = ?";
-        String query1 = "SET FOREIGN_KEY_CHECKS = 0";
-        String query3 = "SET FOREIGN_KEY_CHECKS = 1";
+        String query = "DELETE FROM turmas WHERE id = ?";
+
         Conexao conexao = new Conexao();
         try {
-            PreparedStatement stmt = conexao.getConexao().prepareStatement(query1);
-            stmt.execute();
+           
             PreparedStatement sql = conexao.getConexao().prepareStatement(query);
             sql.setInt(1, id);
             sql.executeUpdate();
-            PreparedStatement q3 = conexao.getConexao().prepareStatement(query3);
-            q3.execute();
+            
+            //alunodao.insert(aluno);
+            //disciplinadao.insert(disciplina);
+            
+        } catch (SQLException e) {
+            System.err.println("Erro ao excluir turma: " + e.getMessage());
+        }
+    }
+    
+    public void deleteByCod(int professor_id, int disciplina_id, String codigo_turma) {
+        
+        String query = "DELETE FROM turmas WHERE professor_id = ? " +
+                        "AND disciplina_id = ? AND codigo_turma = ?";
+
+        Conexao conexao = new Conexao();
+        try {
+           
+            PreparedStatement sql = conexao.getConexao().prepareStatement(query);
+            sql.setInt(1, professor_id);
+            sql.setInt(2, disciplina_id);
+            sql.setString(3, codigo_turma);
+            sql.executeUpdate();
+
             
         } catch (SQLException e) {
             System.err.println("Erro ao excluir turma: " + e.getMessage());
@@ -175,14 +193,15 @@ public class TurmaDAO implements Dao<Turma> {
             ResultSet resultado = sql.executeQuery();
 
             while (resultado.next()) {
-                Turma turma = new Turma(
-                        resultado.getInt("id"),
-                        resultado.getInt("professor_id"),
-                        resultado.getInt("disciplina_id"),
-                        resultado.getInt("aluno_id"),
-                        resultado.getString("codigo_turma"),
-                        resultado.getDouble("nota")
-                );
+                Turma turma = new Turma();
+                
+                turma.setId(resultado.getInt("id"));
+                turma.setProfessorId(resultado.getInt("professor_id"));
+                turma.setDisciplinaId(resultado.getInt("disciplina_id"));
+                turma.setCodigoTurma(resultado.getString("codigo_turma"));
+                turma.setAlunoId(resultado.getInt("aluno_id"));
+                turma.setNota(resultado.getDouble("nota"));
+
                 turmas.add(turma);
             }
         } catch (SQLException e) {

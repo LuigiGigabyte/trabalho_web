@@ -173,6 +173,7 @@ public class AlunoDAO implements Dao<Aluno> {
                 turma.setCodigoTurma(resultado.getString("codigo_turma"));
                 turma.setDisciplinaId(resultado.getInt("disciplina_id"));
                 turma.setNota(resultado.getDouble("nota"));
+                turma.setProfessorId(resultado.getInt("professor_id"));
                
                 turmas.add(turma);
             }

@@ -73,7 +73,7 @@
                                 <th scope="col">Código da Turma</th>
                                 <th scope="col">Disciplina</th>
                                 <th scope="col">Professor</th>
-                                <!-- <th scope="col">Ações</th> -->
+                                 <th scope="col">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -88,10 +88,10 @@
                                     <td><%= turma.getCodigoTurma() %></td>
                                     <td><%= disciplina.getNome() %></td>
                                     <td><%= professor.getNome() %></td>
-                                    <!--  <td>
+                                     <td>
                                         <a href="/aplicacaoMVC/aluno/TurmaController?acao=Excluir&codigo_turma=<%=turma.getCodigoTurma()%>&disciplina_id=<%=turma.getDisciplinaId()%>&professor_id=<%=turma.getProfessorId()%>&aluno=<%=((Aluno) sessao.getAttribute("alunoLogado")).getId()%>"
                                            class="btn btn-danger">Sair</a>
-                                    </td> -->
+                                    </td> 
                                 </tr>
                             <% } %>
                         </tbody>

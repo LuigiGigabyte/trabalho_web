@@ -2,9 +2,11 @@
 <%@page import="model.AlunoDAO"%>
 <%@page import="java.util.List"%>
 <%@page import="model.DisciplinaDAO"%>
+<%@page import="model.ProfessorDAO"%>
 <%@page import="entidade.Turma"%>
 <%@page import="entidade.Aluno"%>
 <%@page import="entidade.Disciplina"%>
+<%@page import="entidade.Professor"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -29,6 +31,7 @@
                             <tr>
                                 <th scope="col">Código da Turma</th>
                                 <th scope="col">Disciplina</th>
+                                <th scope="col">Professor</th>
                                 <th scope="col">Nota</th>
                             </tr>
                         </thead>
@@ -36,12 +39,14 @@
                             <%
                                 ArrayList<Turma> listaTurmas = (ArrayList<Turma>) request.getAttribute("listaTurmas");
                                 DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+                                ProfessorDAO professorDAO = new ProfessorDAO();
                                 
                                 
                                 
                                 for (Turma turma : listaTurmas) {
                                     Disciplina disciplina = disciplinaDAO.get(turma.getDisciplinaId());
                                     Double nota = turma.getNota();
+                                    Professor professor = professorDAO.get(turma.getProfessorId());
                                     if(nota > 90){
                                         nota = 0.0;
                                     }
@@ -49,6 +54,7 @@
                                     out.println("<tr>");
                                     out.println("<td>" + turma.getCodigoTurma() + "</td>");
                                     out.println("<td>" + disciplina.getNome() + "</td>");
+                                     out.println("<td>" + professor.getNome() + "</td>");
                                     out.println("<td>" + nota + "</td>");
                                     out.println("</tr>");
                                     
